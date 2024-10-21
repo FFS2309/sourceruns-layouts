@@ -1,11 +1,10 @@
 {
-    "name": "nsg2-layouts",
+    "name": "sourceruns-layouts",
     "version": "0.1.0",
-    "description": "Broadcast graphics for the Norway Speedrunner Gathering",
+    "description": "Broadcast graphics for SourceRuns Marathon",
     "author": {
-        "name": "inkfarer",
-        "email": "inkfarer@inkfarer.com",
-        "url": "https://inkfarer.com"
+        "name": "FabiClawZ",
+        "url": "https://fabiclawz.net"
     },
     "scripts": {
         "build:clean": "run-s clean build",
