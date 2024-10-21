@@ -7,20 +7,14 @@
     src: url('../assets/fonts/DSEG7Classic-Bold.woff2');
 }
 
-@font-face {
-    font-family: 'HD44780A00 5x8';
-    font-weight: 400;
-    src: url('../assets/fonts/HD44780A005x8.otf');
-}
-
 body {
-    font-family: 'Roboto', 'Noto Sans JP', sans-serif;
+    font-family: 'Tahoma', 'Roboto', 'Noto Sans JP', sans-serif;
     font-weight: 400;
     font-optical-sizing: auto;
     color: colors.$text-color;
 }
 
 .font-numeric {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'HalfLife2','Montserrat', sans-serif;
     font-variant-numeric: tabular-nums;
 }

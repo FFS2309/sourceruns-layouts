@@ -23,11 +23,41 @@ body {
 }
 
 .bg-timer {
-    background: colors.$timer-background;
+    background: url("../assets/img/background-black-mesa.png") !important;
+    background-size: cover;
 }
 
 .bg-panel {
-    background: colors.$layout-panel-background;
+    background: url("../assets/img/background-hl2.png");
+    background-size: cover;
+}
+.bg-panel-jump {
+    background: url("../assets/img/jumpcup-bg.png") !important;
+    background-size: cover;
+}
+.bg-panel-portal {
+    background: url("../assets/img/portal-jless.png") !important;
+    background-size: cover;
+}
+
+
+.blur-bg::after {
+    -webkit-backdrop-filter: blur(5px); /* Use for Safari 9+, Edge 17+ (not a mistake) and iOS Safari 9.2+ */
+    backdrop-filter: blur(5px); /* Supported in all major browsers */
+
+    content: "";
+    display: block;
+    position: absolute;
+    width: 100%; height: 100%;
+    top: 0;
+    left: 0;
+}
+.blur-bg {
+    position: relative;
+}
+/* Use for child content that should not be dark */
+.u-non-blur {
+    z-index: 1;
 }
 
 .bg-inset {

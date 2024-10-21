@@ -1,88 +1,54 @@
 <template>
-    <div class="intermission-schedule bg-inset">
-        <div class="title">
-            <span>Next Up</span>
-        </div>
+    <div class="tab">
+      <div class="title">
+        <span>Next Up</span>
+      </div>
+      <div class="table-header layout horizontal center-vertical">
+        <span>Game</span><span>Runner</span><span>Category</span><span style="width: 30%;">Estimate</span><span style="width: 30%;">Players</span>
+      </div>
+      <div class="intermission-schedule">
         <template
             v-for="(item, i) in nextScheduleItems"
         >
-            <div class="schedule-item layout horizontal center-vertical">
-                <template v-if="item != null">
-                    <div
-                        v-if="i > 0"
-                        class="schedule-item-time-delta layout horizontal"
-                    >
-                        <div class="in">IN</div>
-                        <seven-segment-digits
-                            :digit-count="2"
-                            :value="scheduleItemTimeDeltas[i - 1] >= 60 ? Math.round(scheduleItemTimeDeltas[i - 1] / 60) : scheduleItemTimeDeltas[i - 1]"
-                            class="delta-digits"
-                        />
-                        <div class="m-l-2">
-                            <div class="unit" :class="{ lit: scheduleItemTimeDeltas[i - 1] < 60 }">MIN</div>
-                            <div class="unit" :class="{ lit: scheduleItemTimeDeltas[i - 1] >= 60 }">HR<span :class="{ unlit: Math.round(scheduleItemTimeDeltas[i - 1] / 60) === 1 }">S</span></div>
-                        </div>
-                    </div>
-                    <div class="layout vertical center-vertical grow">
-                        <vfd-pixel-text
-                            :font-size="27"
-                            :text-content="item.title"
-                        />
-                        <div
-                            v-if="item.type === 'SPEEDRUN' || item.talentIds.length > 0"
-                            class="layout horizontal"
-                        >
-                            <template v-if="item.type === 'SPEEDRUN'">
-                                <div class="max-width m-t-4">
-                                    <vfd-pixel-text
-                                        :font-size="22"
-                                        :text-content="talentStore.formatSpeedrunTeamList(item.teams)"
-                                    />
-                                    <vfd-pixel-text
-                                        :font-size="22"
-                                        :text-content="item.category"
-                                    />
-                                </div>
-                                <speedrun-estimate-display
-                                    :estimate="item.estimate"
-                                    class="estimate-display"
-                                />
-                            </template>
-                            <vfd-pixel-text
-                                v-else
-                                :font-size="22"
-                                :text-content="talentStore.formatTalentIdList(item.talentIds, 4)"
-                                class="max-width m-t-4"
-                            />
-                        </div>
-                    </div>
-                </template>
-            </div>
-            <div class="separator" />
+          <div class="schedule-item layout horizontal center-vertical">
+            <template v-if="item != null">
+              <span style="font-size: 16px; text-align: left; width: 100%">{{item.title}}</span>
+                  <template v-if="item.type === 'SPEEDRUN'">
+                    <span style="font-size: 16px; text-align: left; width: 100%">{{talentStore.formatSpeedrunTeamList(item.teams)}}</span>
+                    <span style="font-size: 16px; text-align: left; width: 100%">{{item.category}}</span>
+                    <span style="font-size: 16px; text-align: left; width: 30%">{{item.estimate.replace('PT', '')}}</span>
+                    <span style="font-size: 16px; text-align: left; width: 30%">{{talentStore.getPlayerCountTeam(item.teams)}}/32</span>
+                  </template>
+                  <template v-else>
+                    <span style="font-size: 16px; text-align: left; width: 100%">{{talentStore.formatTalentIdList(item.talentIds, 4)}}</span>
+                    <span style="font-size: 16px; text-align: left; width: 100%"> </span>
+                    <span style="font-size: 16px; text-align: left; width: 30%"> </span>
+                    <span style="font-size: 16px; text-align: left; width: 30%">{{talentStore.getPlayerCountTalent(item.talentIds)}}/32</span>
+                  </template>
+            </template>
+          </div>
         </template>
-        <div class="schedule-notes layout vertical center-vertical center-horizontal max-width">
-            <div class="m-b-8">Times are approximate.</div>
-            <div class="layout horizontal center-vertical">
-                <div class="full-schedule-label">Full Schedule</div>
-                <div class="full-schedule-pointer-icon m-x-8">»</div>
-                <div class="full-schedule-link">schedule.nsgmarathon.com</div>
-            </div>
-        </div>
+      </div>
+    </div>
+    <div class="schedule-notes layout vertical center-vertical center-horizontal max-width">
+      <div class="m-b-8">Times are approximate.</div>
+      <div class="layout horizontal center-vertical">
+        <div class="full-schedule-label">Full Schedule</div>
+        <div class="full-schedule-pointer-icon m-x-8">»</div>
+        <div class="full-schedule-link">schedule.sourceruns.org</div>
+      </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { useScheduleStore } from 'client-shared/stores/ScheduleStore';
-import { computed, ref, watchEffect } from 'vue';
-import { ScheduleItem } from 'types/ScheduleHelpers';
-import { useTimerStore } from 'client-shared/stores/TimerStore';
-import VfdPixelText from 'components/VfdPixelText.vue';
-import { useTalentStore } from 'client-shared/stores/TalentStore';
-import SpeedrunEstimateDisplay from 'components/SpeedrunEstimateDisplay.vue';
-import { Duration } from 'luxon';
-import SevenSegmentDigits from 'components/SevenSegmentDigits.vue';
+import {useScheduleStore} from 'client-shared/stores/ScheduleStore';
+import {computed, ref, watchEffect} from 'vue';
+import {ScheduleItem} from 'types/ScheduleHelpers';
+import {useTimerStore} from 'client-shared/stores/TimerStore';
+import {useTalentStore} from 'client-shared/stores/TalentStore';
+import {Duration} from 'luxon';
 
-const maxScheduleItemCount = 4;
+const maxScheduleItemCount = 16;
 
 const scheduleStore = useScheduleStore();
 const timerStore = useTimerStore();
@@ -138,19 +104,58 @@ const scheduleItemTimeDeltas = computed(() => {
 @use '../../styles/colors';
 
 .intermission-schedule {
-    padding: 12px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: colors.$hl-panel-background;
+    //border-top: 2px solid colors.$hl-shadow;
+}
+.bg-inset {
+  padding: 0 8px 8px 8px;
+}
+.tab {
+  border-left: 2px solid colors.$hl-highlight;
+  border-right: 2px solid colors.$hl-highlight;
+  border-bottom: 2px solid colors.$hl-shadow;
+  background-color: colors.$hl-background-green;
+}
+
+.table-header {
+  width: 100%;
+  //margin-bottom: 12px;
+  background-color: colors.$hl-panel-background;
+  //box-shadow: 2px 0 0 2px colors.$hl-panel-background;
+  border-bottom: 2px solid colors.$hl-shadow;
+
+  span {
+    border-left: 1px solid colors.$hl-highlight;
+    border-top: 2px solid colors.$hl-highlight;
+    border-right: 2px solid colors.$hl-shadow;
+    background-color: colors.$hl-background-green;
+    font-weight: 400;
+    text-transform: uppercase;
+    font-size: 14px;
+    padding: 2px 12px;
+    width: 100%;
+  }
 }
 
 .title {
     width: 100%;
     margin-bottom: 12px;
+    //background-color: colors.$hl-panel-background;
+    box-shadow: 2px 0 0 2px colors.$hl-background-green;
+    border-bottom: 2px solid colors.$hl-highlight;
 
     span {
-        color: colors.$vfd-background;
-        background-color: colors.$vfd-red;
-        font-weight: 700;
+      //border-left: 2px solid colors.$hl-highlight;
+      border-top: 2px solid colors.$hl-highlight;
+      border-right: 2px solid colors.$hl-highlight;
+      border-bottom: none;
+        background-color: colors.$hl-background-green;
+        color: colors.$hl-text-selected;
+        font-weight: 400;
         text-transform: uppercase;
-        font-size: 25px;
+        font-size: 14px;
         padding: 2px 12px;
     }
 }
@@ -163,7 +168,27 @@ const scheduleItemTimeDeltas = computed(() => {
 }
 
 .schedule-item {
-    min-height: 90px;
+    /*width: 100%;
+    min-height: 20px;
+    margin-bottom: 12px;*/
+
+  width: 100%;
+  margin-bottom: 12px;
+  //background-color: colors.$hl-panel-background;
+  //box-shadow: 2px 0 0 2px colors.$hl-panel-background;
+  //border-bottom: 2px solid colors.$hl-shadow;
+
+  span {
+    //border-left: 1px solid colors.$hl-highlight;
+    //border-top: 2px solid colors.$hl-highlight;
+    //border-right: 2px solid colors.$hl-shadow;
+    //background-color: colors.$hl-background-green;
+    font-weight: 400;
+    text-transform: uppercase;
+    font-size: 14px;
+    padding: 2px 12px;
+    width: 100%;
+  }
 }
 
 .estimate-display {
@@ -185,8 +210,8 @@ const scheduleItemTimeDeltas = computed(() => {
 }
 
 .full-schedule-label {
-    color: colors.$vfd-background;
-    background-color: colors.$vfd-teal;
+    background-color: colors.$hl-hud-bg-transparent;
+    color: colors.$hl-hud-text-color;
     font-weight: 700;
     padding: 1px 12px;
     text-transform: uppercase;

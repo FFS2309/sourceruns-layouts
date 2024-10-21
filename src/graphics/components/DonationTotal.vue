@@ -7,7 +7,6 @@
         />
         <div class="currency-label">
             <div>USD</div>
-            <div>NOK</div>
         </div>
     </div>
 </template>

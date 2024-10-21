@@ -7,7 +7,7 @@
             >
                 <opacity-swap-transition mode="default">
                     <span v-if="slides.activeComponent.value === 'donationReminder1'">You are watching <span class="emphasis">{{ eventName }}</span></span>
-                    <span v-else>In support of the NABP - <span class="emphasis">{{ donationUrl }}</span></span>
+                    <span v-else>In support of St. Jude - <span class="emphasis">{{ donationUrl }}</span></span>
                 </opacity-swap-transition>
             </div>
             <div
@@ -30,7 +30,7 @@
                             v-if="slides.activeComponent.value === 'fallback'"
                             class="no-slide-placeholder max-height"
                         >
-                            Benefiting Norges Blindeforbund
+                            Benefitting St. Jude Children's Research Hospital
                         </div>
                         <omnibar-schedule-item-display
                             v-else-if="slides.activeComponent.value === 'nextUp'"
@@ -89,10 +89,11 @@ import OmnibarMilestoneDisplay from 'components/omnibar/OmnibarMilestoneDisplay.
 
 const props = withDefaults(defineProps<{
     withoutDonationReminder?: boolean
-    slideTitleWidth: number
+    slideTitleWidth?: number
     withoutScheduleItems?: boolean
 }>(), {
     withoutDonationReminder: false,
+    slideTitleWidth: 27,
     withoutScheduleItems: false
 });
 
@@ -284,15 +285,15 @@ const slideTitle = computed(() => {
 
 .slide-title {
     font-weight: 700;
-    font-size: 25px;
+    font-size: 27px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: -2px 8px 0;
 
     .slide-title-text {
-        background-color: colors.$vfd-teal;
-        color: colors.$vfd-background;
+        background-color: colors.$hl-hud-bg-transparent;
+        color: colors.$hl-hud-text-color;
         padding: 2px 12px;
         text-transform: uppercase;
     }
@@ -325,7 +326,7 @@ const slideTitle = computed(() => {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(to bottom, #93FFFB 0%, #B5FAF7 100%);
+    background: colors.$layout-panel-background;
     font-size: 40px;
     font-weight: 500;
     text-align: center;
@@ -337,7 +338,7 @@ const slideTitle = computed(() => {
     border-style: solid;
 
     .emphasis {
-        color: colors.$vfd-red;
+        color: colors.$vfd-teal;
         font-weight: 700;
     }
 }

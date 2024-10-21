@@ -10,18 +10,6 @@
                 />
             </fieldset>
             <div style="margin-left: -2px;">
-                <div class="run-info-text-segments">
-                    <div>
-                        <span :class="{ lit: isCoop }">CO-OP</span>
-                        <span :class="{ lit: scheduleStore.activeSpeedrun?.relay }">RELAY</span>
-                        <span :class="{ lit: isRace }" class="segment-red">RACE</span>
-                    </div>
-                    <div>
-                        <span>SLEEP</span>
-                        <span class="lit">FAST</span>
-                        <span class="segment-red"><span>FASTER</span><span>!!!</span></span>
-                    </div>
-                </div>
                 <div class="layout horizontal center-vertical">
                     <seven-segment-digits
                         unlit-segment="8:88:88 .8"
@@ -35,23 +23,23 @@
                         <div class="layout horizontal play-pause-section">
                             <span :class="{ lit: timerStore.timer.state === 'RUNNING' }">
                                 PLAY
-                                <svg viewBox="0 0 15 15">
+                                <!--<svg viewBox="0 0 15 15">
                                     <path d="M0,0L15,7.5L0,15Z" />
-                                </svg>
+                                </svg>-->
                             </span>
                             <span :class="{ lit: timerStore.timer.state !== 'RUNNING' }">
                                 STOP
-                                <svg viewBox="0 0 15 15">
+                                <!--<svg viewBox="0 0 15 15">
                                     <path d="M0,0L15,0L15,15L0,15Z" />
-                                </svg>
+                                </svg>-->
                             </span>
                         </div>
-                        <div
+                        <!--<div
                             class="estimate-alarm"
                             :class="{ lit: isOverEstimate }"
                         >
                             ESTIMATE
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>
@@ -73,7 +61,7 @@ const timerStore = useTimerStore();
 const props = withDefaults(defineProps<{
     hideRunNumber?: boolean
 }>(), {
-    hideRunNumber: false
+    hideRunNumber: true
 });
 
 const speedrunCount = computed(() => scheduleStore.speedrunCount(scheduleStore.activeSpeedrun?.id));
@@ -175,15 +163,20 @@ fieldset {
 .play-pause-section {
     span {
         font-weight: 700;
-        color: colors.$vfd-teal-unlit;
+        background: colors.$hl-panel-background;
         transition: color 100ms;
 
+        border-right: 2px solid colors.$hl-shadow;
+        border-bottom: 2px solid colors.$hl-shadow;
+        border-top: 2px solid colors.$hl-highlight;
+        border-left: 2px solid colors.$hl-highlight;
         &.lit {
-            color: colors.$vfd-teal;
+            background-color: colors.$hl-background-green;
 
-            path {
-                fill: colors.$vfd-teal;
-            }
+            border-right: 2px solid colors.$hl-highlight;
+            border-bottom: 2px solid colors.$hl-highlight;
+            border-top: 2px solid colors.$hl-shadow;
+            border-left: 2px solid colors.$hl-shadow;
         }
 
         &:not(:first-child) {

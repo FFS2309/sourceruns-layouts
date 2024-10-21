@@ -9,7 +9,7 @@
             justifyContent
         }"
     >
-        <span class="background">{{ '▓'.repeat(characterCount) }}</span>
+        <!--<span class="background">{{ '▓'.repeat(characterCount) }}</span>-->
         <fitted-content
             v-if="useFittedContent"
             :align="props.textAlign"
@@ -214,7 +214,7 @@ const progressBarInfo = computed(() => {
 @use '../styles/colors';
 
 .vfd-pixel-text {
-    font-family: 'HD44780A00 5x8';
+    font-family: 'Tahoma';
     color: colors.$vfd-teal;
     display: flex;
     text-rendering: geometricPrecision;

@@ -5,21 +5,45 @@
                 class="camera-capture layout-gap-bottom"
                 data-capture-index="0"
             />
-            <div class="grow layout vertical bg-panel">
-                <player-nameplate :index="0" :max-concurrent-players="4" />
+            <div class="max-height layout vertical bg-panel blur-bg center-vertical">
+              <div class="bg-inset u-non-blur m-t-16 m-b-16">
+                <div class="header layout horizontal">
+                  <span style="width: 100%; font-size: 16px">Runners</span>
+                  <span style="width: 5%; font-size: 16px" class="button">X</span>
+                </div>
+                <player-nameplate :index="0" :max-concurrent-players="4" class=""/>
+              </div>
+              <div class="bg-inset u-non-blur m-t-16 m-b-16">
+                <div class="header layout horizontal">
+                  <span style="width: 100%; font-size: 16px">Host</span>
+                  <span style="width: 5%; font-size: 16px" class="button">X</span>
+                </div>
                 <other-nameplate-grid class="m-y-12 m-x-16" />
                 <media-box class="grow m-b-12 m-x-12" />
+              </div>
             </div>
         </div>
         <large-separator direction="vertical" />
         <div class="layout vertical">
             <div
-                class="game-capture layout-gap-bottom"
+                class="game-capture layout-gap-bottom max-height"
                 data-capture-index="0"
             />
-            <div class="timer-wrapper grow bg-timer layout-gap-bottom layout-gap-right layout horizontal center-vertical center-horizontal">
-                <speedrun-timer class="bg-inset" />
-                <speedrun-details class="m-l-16 bg-inset" />
+            <div class="timer-wrapper bg-panel bg-timer blur-bg layout horizontal center-vertical center-horizontal">
+              <div class="bg-inset u-non-blur m-r-16">
+                <div class="header layout horizontal">
+                  <span style="width: 100%; font-size: 16px">Timer</span>
+                  <span style="width: 5%; font-size: 16px" class="button">X</span>
+                </div>
+                <speedrun-timer class="m-t-8"/>
+              </div>
+              <div class="bg-inset u-non-blur m-l-16">
+                <div class="header layout horizontal">
+                  <span style="width: 100%; font-size: 16px">Run Details</span>
+                  <span style="width: 5%; font-size: 16px" class="button">X</span>
+                </div>
+                <speedrun-details class="m-t-8" />
+              </div>
             </div>
         </div>
         <large-separator

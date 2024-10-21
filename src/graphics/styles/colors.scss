@@ -1,10 +1,21 @@
-$text-color: #222;
-$vfd-teal: #99FBF9;
-$vfd-teal-unlit: #182727;
-$vfd-background: #000;
-$vfd-red: #EF3532;
-$vfd-red-unlit: #3F020E;
+$hl-background-green: #4c5844;
+$hl-panel-background: #3e4637;
+$hl-shadow: #2a3223;
+$hl-grey: #b0aeae;
+$hl-green-light: #5a6a50;
+$hl-highlight: #7e8a76;
+$hl-hud-bg-transparent: #FF981F50;
+$hl-hud-text-color: #FFBA68;
+$hl-text-selected: #FFBA68;
 
-$layout-gap: #010306;
-$timer-background: linear-gradient(to bottom, #151D26 0%, #111921 100%);
-$layout-panel-background: linear-gradient(to bottom, #061C35 0%, #05182D 100%);
+$text-color: $hl-grey;
+$vfd-teal: #FFBA68;
+$vfd-teal-unlit: #824900;
+$vfd-background: $hl-shadow;
+$vfd-red: #FF981F;
+$vfd-red-unlit: #7D4100;
+
+$layout-gap: $hl-highlight;
+
+$layout-panel-background: $hl-panel-background;
+$timer-background: $hl-panel-background;

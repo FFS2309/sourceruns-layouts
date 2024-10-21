@@ -3,13 +3,16 @@
         class="intermission-layout"
         :class="{ 'with-visualizer-space': addVisualizerSpace }"
     >
-        <div class="bg-panel">
-            <div class="layout horizontal logos">
+        <div class="bg-panel bg-panel-jump blur-bg">
+            <div class="layout horizontal logos u-non-blur">
                 <img src="../../assets/img/large-logo.png">
                 <media-box class="media-box" />
             </div>
-            <intermission-prize-display class="max-width prize-display" />
-            <div class="bg-inset m-t-16 layout vertical center-horizontal">
+            <div class="bg-inset m-t-16 layout vertical center-horizontal u-non-blur">
+                <div class="header layout horizontal">
+                  <span style="width: 100%; font-size: 16px">Donations</span>
+                  <span style="width: 5%; font-size: 16px" class="button">X</span>
+                </div>
                 <div class="m-b-8 layout horizontal center-vertical">
                     <donation-total class="donation-total" />
                     <div class="pointer-icon">»</div>
@@ -19,14 +22,25 @@
                     >
                 </div>
             </div>
-            <div class="bg-inset m-t-16" style="overflow: hidden; height: 80px">
+            <div class="bg-inset m-t-16 u-non-blur" style="overflow: hidden;">
+              <div class="header layout horizontal">
+                <span style="width: 100%; font-size: 16px">Omnibar</span>
+                <span style="width: 5%; font-size: 16px" class="button">X</span>
+              </div>
+              <div style="height: 100px">
                 <omnibar-slide-rotation
                     :slide-title-width="150"
                     without-donation-reminder
                     without-schedule-items
+
                 />
+              </div>
             </div>
-            <div class="bg-inset m-t-16 layout vertical">
+            <div class="bg-inset m-t-16 layout vertical u-non-blur">
+              <div class="header layout horizontal">
+                <span style="width: 100%; font-size: 16px">Radio</span>
+                <span style="width: 5%; font-size: 16px" class="button">X</span>
+              </div>
                 <div class="layout horizontal center-vertical">
                     <div
                         class="host-name-display layout vertical center-vertical center-horizontal"
@@ -64,15 +78,15 @@
                         <div class="host-name-label">H</div>
                     </div>
                     <div class="music-icon">♫</div>
-                    <div class="grow" style="margin-top: -4px">
+                    <div class="grow" style="height: 50px;">
                         <vfd-pixel-text
-                            :font-size="24"
+                            :font-size="22"
                             :text-content="musicStore.musicState.track?.artist ?? 'Unknown Artist'"
                             align="left"
                             text-align="left"
                         />
                         <vfd-pixel-text
-                            :font-size="24"
+                            :font-size="22"
                             :text-content="musicStore.musicState.track?.song ?? 'Unknown Song'"
                             align="left"
                             text-align="left"
@@ -86,9 +100,14 @@
             </div>
         </div>
         <large-separator direction="vertical" />
-        <div class="bg-panel right-panel">
-            <intermission-schedule />
-            <div class="bg-inset camera-border" />
+        <div class="bg-panel bg-panel-portal blur-bg">
+          <div class="bg-inset u-non-blur">
+            <div class="header layout horizontal">
+              <span style="width: 100%; font-size: 16px">Schedule</span>
+              <span style="width: 5%; font-size: 16px" class="button">X</span>
+            </div>
+            <intermission-schedule/>
+          </div>
         </div>
     </div>
 </template>
@@ -137,6 +156,34 @@ const hostSpeaking = computed(() => {
 @use 'sass:color';
 @use '../../styles/colors';
 
+
+
+.header {
+  width: 100%;
+  margin-bottom: 22px;
+  background-color: colors.$hl-panel-background;
+  //box-shadow: 2px 0 0 2px colors.$hl-panel-background;
+  //border-bottom: 2px solid colors.$hl-shadow;
+
+  span {
+    //border-left: 1px solid colors.$hl-highlight;
+    //border-top: 2px solid colors.$hl-highlight;
+    //border-right: 2px solid colors.$hl-shadow;
+    background-color: colors.$hl-background-green;
+    font-weight: 400;
+    text-transform: uppercase;
+    font-size: 14px;
+    padding: 2px 12px;
+    width: 100%;
+    &.button {
+      border-right: 2px solid colors.$hl-shadow;
+      border-bottom: 2px solid colors.$hl-shadow;
+      border-top: 2px solid colors.$hl-highlight;
+      border-left: 2px solid colors.$hl-highlight
+    }
+  }
+}
+
 .intermission-layout {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 14px minmax(0, 1fr);
@@ -146,18 +193,6 @@ const hostSpeaking = computed(() => {
         padding: 40px 50px;
         display: flex;
         flex-direction: column;
-
-        &.right-panel {
-            $schedule-height: 723px;
-            // Will explode if the schedule's height changes, but I don't foresee that.
-            clip-path: polygon(0% 0%, 0% 100%, 53px 100%, 53px $schedule-height, calc(100% - 53px) $schedule-height, calc(100% - 53px) calc(100% - 53px), 50px calc(100% - 53px), 53px 100%, 100% 100%, 100% 0%);
-
-            > .camera-border {
-                margin-top: 40px;
-                margin-bottom: 10px;
-                height: 100%;
-            }
-        }
     }
 
     &.with-visualizer-space {
@@ -264,7 +299,7 @@ const hostSpeaking = computed(() => {
 }
 
 .music-icon {
-    font-size: 40px;
+    font-size: 60px;
     color: colors.$vfd-teal;
     margin: -4px 12px 0;
 }

@@ -1,6 +1,9 @@
 @use './colors';
 
 @mixin inset-container {
-    background-color: colors.$vfd-background;
-    border: 3px inset #393939;
+    border-left: 2px solid colors.$hl-highlight;
+    border-right: 2px solid colors.$hl-highlight;
+    border-top: 2px solid colors.$hl-highlight;
+    border-bottom: 2px solid colors.$hl-shadow;
+    background-color: colors.$hl-background-green;
 }

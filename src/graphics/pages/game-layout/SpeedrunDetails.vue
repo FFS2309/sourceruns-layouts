@@ -1,27 +1,13 @@
 <template>
-    <div class="speedrun-details">
-        <vfd-pixel-text
-            :font-size="25"
-            :text-content="scheduleStore.activeSpeedrun?.title"
-            class="speedrun-title"
-        />
-        <div
-            class="layout horizontal m-t-4"
-            style="align-items: flex-end"
-        >
-            <div class="max-width">
-                <vfd-pixel-text
-                    :font-size="20"
-                    :text-content="systemAndReleaseYear"
-                    align="left"
-                />
-                <vfd-pixel-text
-                    :font-size="20"
-                    :text-content="scheduleStore.activeSpeedrun?.category"
-                    align="left"
-                />
-            </div>
-            <speedrun-estimate-display :estimate="scheduleStore.activeSpeedrun?.estimate" />
+    <div>
+        <div class="table-header layout horizontal center-vertical">
+          <span>Game</span><span style="width: 30%">System</span><span>Category</span><span style="width: 20%;">Est.</span>
+        </div>
+        <div class="layout horizontal center-vertical speedrun-details">
+          <span style="font-size: 16px; text-align: left; width: 100%">{{scheduleStore.activeSpeedrun?.title}}</span>
+          <span style="font-size: 16px; text-align: left; width: 30%">{{systemAndReleaseYear}}</span>
+          <span style="font-size: 16px; text-align: left; width: 100%">{{scheduleStore.activeSpeedrun?.category}}</span>
+          <span style="font-size: 16px; text-align: left; width: 20%">{{scheduleStore.activeSpeedrun?.estimate.replace('PT', '')}}</span>
         </div>
     </div>
 </template>
@@ -44,13 +30,32 @@ const systemAndReleaseYear = computed(() =>
 @use '../../styles/decorations';
 
 .speedrun-details {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    box-sizing: border-box;
+      padding-top: 6px;
+      padding-bottom: 6px;
+      background-color: colors.$hl-panel-background;
 }
 
 .speedrun-title {
     margin-top: -4px;
+}
+
+.table-header {
+  width: 100%;
+  //margin-bottom: 12px;
+  background-color: colors.$hl-background-green;
+  //box-shadow: 2px 0 0 2px colors.$hl-panel-background;
+  border-bottom: 2px solid colors.$hl-shadow;
+
+  span {
+    border-left: 1px solid colors.$hl-highlight;
+    border-top: 2px solid colors.$hl-highlight;
+    border-right: 2px solid colors.$hl-shadow;
+    background-color: colors.$hl-background-green;
+    font-weight: 400;
+    text-transform: uppercase;
+    font-size: 14px;
+    padding: 2px 12px;
+    width: 100%;
+  }
 }
 </style>

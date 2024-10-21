@@ -18,9 +18,9 @@ const props = defineProps<{
 <style scoped lang="scss">
 @use '../styles/colors';
 
-$separator-color: #092C51;
-$separator-color-highlight: #0D3559;
-$separator-color-shadow: colors.$layout-gap;
+$separator-color: colors.$hl-background-green;
+$separator-color-highlight: colors.$hl-highlight;
+$separator-color-shadow: colors.$hl-shadow;
 
 .separator {
     background-color: $separator-color;
@@ -28,12 +28,12 @@ $separator-color-shadow: colors.$layout-gap;
 
     &.vertical {
         min-width: 14px;
-        grid-template-columns: 3px 1fr 3px;
+        grid-template-columns: 2px 1fr 2px;
     }
 
     &.horizontal {
         min-height: 14px;
-        grid-template-rows: 3px 1fr 3px;
+        grid-template-rows: 2px 1fr 2px;
     }
 
     > .highlight {

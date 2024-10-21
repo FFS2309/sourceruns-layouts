@@ -4,10 +4,12 @@
             src="../../assets/img/small-logo.png"
             class="omnibar-logo"
         >
+        <large-separator direction="vertical"/>
         <omnibar-slide-rotation
             :slide-title-width="225"
             style="width: 1250px; height: 100%"
         />
+        <large-separator direction="vertical"/>
         <div class="bg-inset logo-and-total layout horizontal center-vertical">
             <svg
                 class="charity-logo"
@@ -29,6 +31,7 @@
 import Clock from 'components/Clock.vue';
 import DonationTotal from 'components/DonationTotal.vue';
 import OmnibarSlideRotation from 'components/omnibar/OmnibarSlideRotation.vue';
+import LargeSeparator from "components/LargeSeparator.vue";
 </script>
 
 <style lang="scss">

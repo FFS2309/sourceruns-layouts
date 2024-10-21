@@ -26,10 +26,22 @@
         <div class="other-content-row">
             <div class="column">
                 <player-nameplate :index="0" />
-                <div class="timer-wrapper bg-timer layout vertical center-vertical grow">
+                <div class="timer-wrapper bg-timer bg-panel layout vertical center-vertical grow blur-bg">
                     <div class="space-filler" />
-                    <speedrun-details class="bg-inset" />
-                    <speedrun-timer class="m-t-8 bg-inset" />
+                  <div class="bg-inset u-non-blur m-r-16">
+                    <div class="header layout horizontal">
+                      <span style="width: 100%; font-size: 16px">Timer</span>
+                      <span style="width: 5%; font-size: 16px" class="button">X</span>
+                    </div>
+                    <speedrun-timer class="m-t-8"/>
+                  </div>
+                  <div class="bg-inset u-non-blur m-l-16">
+                    <div class="header layout horizontal">
+                      <span style="width: 100%; font-size: 16px">Run Details</span>
+                      <span style="width: 5%; font-size: 16px" class="button">X</span>
+                    </div>
+                    <speedrun-details class="m-t-8" />
+                  </div>
                     <div class="livesplit-logo-wrapper">
                         <img
                             src="../../../assets/img/lslogo-white.png"
@@ -42,9 +54,13 @@
                 class="camera-capture"
                 data-capture-index="0"
             />
-            <div class="column">
+            <div class="bg-panel column">
                 <player-nameplate :index="1" />
-                <div class="bg-panel layout vertical grow">
+                <div class="bg-inset u-non-blur layout vertical grow">
+                    <div class="header layout horizontal">
+                      <span style="width: 100%; font-size: 16px">Host</span>
+                      <span style="width: 5%; font-size: 16px" class="button">X</span>
+                    </div>
                     <other-nameplate-grid class="m-t-12 m-x-16" />
                     <media-box class="grow m-x-8 m-y-8" />
                 </div>

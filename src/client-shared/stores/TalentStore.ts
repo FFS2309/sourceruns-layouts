@@ -29,6 +29,20 @@ export const useTalentStore = defineStore('talent', {
                 return prettyPrintList(talentList.map(talentId => this.findTalentItemById(talentId.id)?.name ?? `Unknown Talent ${talentId.id}`));
             }
         },
+        getPlayerCountTalent() {
+            return (talentList: { id: string }[]) => {
+               return talentList.length;
+            }
+        },
+        getPlayerCountTeam () {
+            return (teams: { playerIds: { id: string }[] }[]) => {
+                const playerCount = teams.reduce((result, team) => {
+                    result += team.playerIds.length;
+                    return result;
+                }, 0);
+                return playerCount;
+            };
+        },
         formatSpeedrunTeamList() {
             return (teams: { playerIds: { id: string }[] }[]) => {
                 const playerCount = teams.reduce((result, team) => {
