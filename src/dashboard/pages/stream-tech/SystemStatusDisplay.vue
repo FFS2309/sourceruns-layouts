@@ -159,7 +159,7 @@ const trackerSocketStatus = computed(() => {
     }
 });
 const trackerLoginStatus = computed(() => {
-    if (bundleConfig?.tracker?.password == null || bundleConfig?.tracker?.username == null) {
+    if ((bundleConfig?.tracker?.password == null || bundleConfig?.tracker?.username == null) && (bundleConfig?.tiltify?.clientId == null || bundleConfig?.tiltify?.clientSecret == null)) {
         return {
             color: 'neutral',
             text: 'Not configured'

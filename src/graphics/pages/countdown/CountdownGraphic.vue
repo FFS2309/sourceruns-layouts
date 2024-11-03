@@ -56,6 +56,8 @@ const duration = computed(() => {
 
 .countdown-wrapper {
     height: calc(100% - constants.$omnibarHeight);
+    background: url("../../assets/img/background.png");
+    background-size: cover;
 }
 
 .event-logo {

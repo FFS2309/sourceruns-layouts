@@ -32,6 +32,13 @@ export interface Configschema {
 		eventId?: number;
 		[k: string]: unknown;
 	};
+	tiltify?: {
+		clientId?: string;
+		clientSecret?: string;
+		user?: string;
+		campaign?: string;
+		[k: string]: unknown;
+	};
 	twitch?: {
 		clientId?: string;
 		clientSecret?: string;

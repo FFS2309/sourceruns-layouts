@@ -176,6 +176,14 @@ export class ObsConnectorService {
         });
     }
 
+    async setInputSettings(inputName: string, inputSettings: any): Promise<void> {
+        await this.socket.call('SetInputSettings', { inputName, inputSettings, overlay: true });
+    }
+
+    /*async getInputSettings(inputName: string): Promise<object> {
+        return (await this.socket.call('GetInputSettings', { inputName }));
+    }*/
+
     private async handleSceneItemCreation(event: EventTypes['SceneItemCreated']) {
         if (event.sceneName === this.obsConfig.value.videoInputsScene) {
             // This event doesn't give us enough info about the created item, so we just reload the list

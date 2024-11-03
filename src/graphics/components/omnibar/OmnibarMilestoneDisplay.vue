@@ -4,7 +4,7 @@
             <fitted-content class="milestone-name m-r-8">
                 {{ props.milestone.name }}
             </fitted-content>
-            <div>{{ formatNumber(donationStore.donationTotal) }}/<span class="milestone-total">{{ formatNumber(props.milestone.amount) }}kr</span></div>
+            <div>{{ formatNumber(donationStore.donationTotal) }}/<span class="milestone-total">{{ formatNumber(props.milestone.amount) }}$</span></div>
         </div>
         <vfd-pixel-text
             :font-size="24"

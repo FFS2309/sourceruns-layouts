@@ -78,8 +78,8 @@ onUnmounted(() => {
     wrapperResizeObserver.disconnect();
 });
 
-const characterHeight = computed(() => Math.round(props.fontSize * 1.1425));
-const characterWidth = computed(() => props.fontSize * 0.857);
+const characterHeight = computed(() => Math.round(props.fontSize * 1.25));
+const characterWidth = computed(() => props.fontSize * 0.35);
 const characterCount = computed(() => Math.floor(wrapperWidth.value / characterWidth.value));
 const justifyContent = computed(() => {
     switch (props.align) {

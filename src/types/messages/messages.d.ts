@@ -36,6 +36,8 @@ export interface MessageInputMap {
     'obs:getSceneItemTransform': { sceneItemId: number, sceneName?: string }
     'obs:setSceneItemCrop': { sceneName: string, sceneItemId: number, crop: { cropTop: number, cropRight: number, cropBottom: number, cropLeft: number } }
     'obs:setVideoInputAssignments': { type: 'game' | 'camera', assignments: (VideoInputAssignment | null)[] }
+    'obs:setVLCPlaylistItem': { inputName: string, inputUrl: string }
+    'obs:getVLCPlaylistItem': { inputName: string }
 
     'tracker:newDonation': { amount: number, displayName: string | undefined | null }
 

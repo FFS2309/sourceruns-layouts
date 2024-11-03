@@ -5,8 +5,7 @@
     >
         <div class="bg-panel bg-panel-jump blur-bg">
             <div class="layout horizontal logos u-non-blur">
-                <img src="../../assets/img/large-logo.png">
-                <media-box class="media-box" />
+                <img src="../../assets/img/small-logo.png">
             </div>
             <div class="bg-inset m-t-16 layout vertical center-horizontal u-non-blur">
                 <div class="header layout horizontal">
@@ -16,10 +15,7 @@
                 <div class="m-b-8 layout horizontal center-vertical">
                     <donation-total class="donation-total" />
                     <div class="pointer-icon">»</div>
-                    <img
-                        class="charity-logo"
-                        src="../../assets/img/charity-logo-wide.png"
-                    >
+                  <span style="font-size: 24px; font-weight: bold;">St. Jude Children's Research Hospital</span>
                 </div>
             </div>
             <div class="bg-inset m-t-16 u-non-blur" style="overflow: hidden;">
@@ -212,11 +208,11 @@ const hostSpeaking = computed(() => {
 }
 
 .logos {
-    justify-content: space-between;
+    justify-content: center;
     margin: 25px 60px 0;
 
     img {
-        width: 250px;
+        width: 600px;
     }
 
     .media-box {

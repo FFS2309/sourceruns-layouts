@@ -18,6 +18,14 @@
                         <font-awesome-icon icon="crop" />
                         Adjust crop
                     </ipl-button>
+                    <ipl-button
+                        class="m-t-8"
+                        :disabled="!allowSettingStreamkey"
+                        @click="streamkeyDialog?.open(obsStore.obsVideoInputAssignments[selectedCapture.type === 'game' ? 'gameCaptures' : 'cameraCaptures'][selectedCapture.index]!, selectedCapture!)"
+                    >
+                      <font-awesome-icon icon="key" />
+                      Set Streamkey
+                    </ipl-button>
                     <ipl-space
                         v-for="input in obsStore.obsState.videoInputs ?? []"
                         :key="input.sourceName"
@@ -92,6 +100,8 @@
         <source-cropping-dialog
             ref="sourceCroppingDialog"
         />
+        <streamkey-dialog
+          ref="streamkeyDialog" />
     </div>
 </template>
 
@@ -109,6 +119,7 @@ import { updateRefOnValueChange } from 'client-shared/helpers/StoreHelper';
 import SceneSwitcher from '../../components/SceneSwitcher.vue';
 import { faCrop } from '@fortawesome/free-solid-svg-icons/faCrop';
 import SourceCroppingDialog from './SourceCroppingDialog.vue';
+import StreamkeyDialog from './StreamkeyDialog.vue';
 import { sendMessage } from 'client-shared/helpers/NodecgHelper';
 import { VideoInputAssignment } from 'types/schemas';
 import TwitchCommercialPlayer from '../../components/TwitchCommercialPlayer.vue';
@@ -187,6 +198,18 @@ const allowCropping = computed(() => {
     ) return false;
     const selectedInput = obsStore.obsVideoInputAssignments[selectedCapture.value.type === 'game' ? 'gameCaptures' : 'cameraCaptures'][selectedCapture.value.index];
     return selectedInput != null && selectedInput.sceneItemId != null && obsStore.obsState.videoInputs.some(input => input.sourceName === selectedInput.sourceName);
+});
+
+const streamkeyDialog = ref<InstanceType<typeof StreamkeyDialog>>();
+const allowSettingStreamkey = computed(() => {
+  if (
+      obsStore.obsState.status !== 'CONNECTED'
+      || obsStore.obsState.videoInputs == null
+      || obsStore.obsState.videoInputs?.length === 0
+      || selectedCapture.value == null
+  ) return false;
+  const selectedInput = obsStore.obsVideoInputAssignments[selectedCapture.value.type === 'game' ? 'gameCaptures' : 'cameraCaptures'][selectedCapture.value.index];
+  return selectedInput != null && selectedInput.sceneItemId != null && obsStore.obsState.videoInputs.some(input => input.sourceName === selectedInput.sourceName);
 });
 </script>
 

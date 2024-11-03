@@ -199,7 +199,7 @@ const scheduleItemTimeDeltas = computed(() => {
     color: colors.$vfd-teal;
     font-size: 28px;
     font-weight: 500;
-    margin-top: -4px;
+    margin-top: 4px;
 }
 
 .full-schedule-pointer-icon {

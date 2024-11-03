@@ -11,11 +11,13 @@ import type {
 } from 'types/schemas';
 import { TrackerClient } from '../clients/TrackerClient';
 import { TrackerSocketClient } from '../clients/TrackerSocketClient';
+import {TiltifyClient} from "../clients/TiltifyClient";
 
 export class TrackerService {
     private readonly nodecg: NodeCG.ServerAPI<Configschema>;
     private readonly logger: NodeCG.Logger;
     private readonly trackerClient?: TrackerClient;
+    private readonly tiltifyClient?: TiltifyClient;
     private readonly trackerSocketClient?: TrackerSocketClient;
     private readonly donationTotal: NodeCG.ServerReplicantWithSchemaDefault<DonationTotal>;
     private readonly allBids: NodeCG.ServerReplicantWithSchemaDefault<AllBids>;
@@ -60,6 +62,16 @@ export class TrackerService {
             this.trackerSocketClient.start();
             this.trackerSocketClient.on('donation', this.onDonation.bind(this));
         }
+
+        if(!TiltifyClient.hasRequiredTrackerConfig(nodecg)) {
+            this.logger.warn('Tiltify tracker is not configured. Donation Tracking may be unavailable.');
+        }else{
+            this.tiltifyClient = new TiltifyClient(nodecg);
+            this.doTokenLoop().then(x => {
+                this.updateDonationTotal(true);
+                this.pollTiltifyData();
+            })
+        }
     }
 
     private async pollTrackerData() {
@@ -84,6 +96,16 @@ export class TrackerService {
         setTimeout(this.pollTrackerData.bind(this), 60 * 1000);
     }
 
+    private async pollTiltifyData() {
+        if (this.tiltifyClient == null) return;
+
+        const results = await Promise.allSettled([
+            this.tiltifyClient.getMilestones().then(milestones => { this.milestones.value = milestones; })
+        ]);
+
+        setTimeout(this.pollTiltifyData.bind(this), 30 * 1000);
+    }
+
     private onDonation(amount: number, newTotal: number, displayName?: string | null) {
         if (this.donationTotal.value < newTotal) {
             this.donationTotal.value = newTotal;
@@ -92,6 +114,29 @@ export class TrackerService {
             amount,
             displayName
         });
+    }
+
+    private async doTokenLoop() {
+        this.trackerState.value.login = 'LOGGING_IN';
+        await this.tiltifyClient?.getToken()
+            .then((token)=>{
+                this.trackerState.value.login = 'LOGGED_IN';
+                if(this.isFirstLogin){
+                    this.isFirstLogin = false;
+                    this.logger.info('Successfully retrieved Tiltify token');
+                }else{
+                    this.logger.debug('Successfully retrieved Tiltify token');
+                }
+                setTimeout(this.doTokenLoop.bind(this), (token.expires_in-10) * 1000);
+            })
+            .catch(e => {
+                this.trackerState.value.login = 'NOT_LOGGED_IN';
+                this.logger.error('Failed to log in to Tiltify tracker:', e instanceof Error ? e.message : String(e));
+                this.logger.debug('Failed to log in to Tiltify tracker:', e);
+                if (!this.isFirstLogin) {
+                    setTimeout(this.doTokenLoop.bind(this), 60 * 1000);
+                }
+            });
     }
 
     private async doLoginLoop() {
@@ -119,17 +164,24 @@ export class TrackerService {
 
     private async updateDonationTotal(force = false) {
         try {
-            if (this.trackerClient == null) return;
+            if (this.trackerClient == null && this.tiltifyClient == null) return;
             this.logger.debug('Requesting donation total from API');
-            const newTotal = await this.trackerClient.getDonationTotal();
-            if (force || this.donationTotal.value < newTotal) {
-                this.donationTotal.value = newTotal;
+            if(!(this.trackerClient == null)){
+                const newTotal = await this.trackerClient.getDonationTotal();
+                if (force || this.donationTotal.value < newTotal) {
+                    this.donationTotal.value = newTotal;
+                }
+            }else if(!(this.tiltifyClient == null)){
+                const newTotal = await this.tiltifyClient.getDonationTotal();
+                if (force || this.donationTotal.value < newTotal) {
+                    this.donationTotal.value = newTotal;
+                }
             }
         } catch (e) {
             this.logger.error('Error updating donation total:', e instanceof Error ? e.message : String(e));
             this.logger.debug('Error updating donation total:', e);
         } finally {
-            this.donationTotalApiUpdateTimeout = setTimeout(this.updateDonationTotal.bind(this), 60 * 1000);
+            this.donationTotalApiUpdateTimeout = setTimeout(this.updateDonationTotal.bind(this), 30 * 1000);
         }
     }
 }

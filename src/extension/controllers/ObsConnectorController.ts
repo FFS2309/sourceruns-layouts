@@ -57,6 +57,14 @@ export class ObsConnectorController extends BaseController {
             await obsConnectorService.setSceneItemCrop(data.sceneName, data.sceneItemId, data.crop);
         });
 
+        /*this.listen('obs:getVLCPlaylistItem', async (data) => {
+            return obsConnectorService.getInputSettings(data.inputName)?.playlist[0].value;
+        });*/
+
+        this.listen('obs:setVLCPlaylistItem', async (data) => {
+           await obsConnectorService.setInputSettings(data.inputName, {playlist: [{hidden: false, selected: false, value: data.inputUrl}]});
+        });
+
         this.listen('obs:setVideoInputAssignments', async (data) => {
             await obsConnectorService.setGameLayoutVideoFeedAssignments(data.type, data.assignments);
         });
