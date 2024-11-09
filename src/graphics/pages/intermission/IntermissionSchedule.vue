@@ -48,7 +48,7 @@ import {useTimerStore} from 'client-shared/stores/TimerStore';
 import {useTalentStore} from 'client-shared/stores/TalentStore';
 import {Duration} from 'luxon';
 
-const maxScheduleItemCount = 16;
+const maxScheduleItemCount = 15;
 
 const scheduleStore = useScheduleStore();
 const timerStore = useTimerStore();

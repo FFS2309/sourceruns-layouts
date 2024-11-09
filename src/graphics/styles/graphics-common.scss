@@ -39,7 +39,10 @@ body {
     background: url("../assets/img/portal-jless.png") !important;
     background-size: cover;
 }
-
+.bg-panel-hl1 {
+    background: url("../assets/img/hl1-menu.jpg") !important;
+    background-size: cover;
+}
 
 .blur-bg::after {
     -webkit-backdrop-filter: blur(5px); /* Use for Safari 9+, Edge 17+ (not a mistake) and iOS Safari 9.2+ */

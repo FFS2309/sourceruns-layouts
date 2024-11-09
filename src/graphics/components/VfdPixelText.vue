@@ -179,7 +179,7 @@ const progressBarInfo = computed(() => {
         if (remainingLitPixelCount !== 0) {
             unlitCharacterCount--;
         }
-        const formattedText = `${formattedStart}${'▓'.repeat(fullyLitCharacterCount)}${getCharacterForRemainingPixels(remainingLitPixelCount)}${' '.repeat(unlitCharacterCount)}${formattedEnd}`;
+        const formattedText = `${formattedStart}${'█'.repeat(fullyLitCharacterCount)}${getCharacterForRemainingPixels(remainingLitPixelCount)}${' '.repeat(unlitCharacterCount)}${formattedEnd}`;
         const percentageStartPosition = Math.floor(formattedText.length / 2) - Math.floor(formattedFullPercentage.length / 2);
 
         // Centers the percentage on the resulting string

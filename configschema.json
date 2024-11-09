@@ -53,6 +53,15 @@
                 "eventId": { "type": "number" }
             }
         },
+        "tiltify": {
+            "type": "object",
+            "properties": {
+                "clientId": { "type": "string" },
+                "clientSecret": { "type": "string" },
+                "user": { "type": "string" },
+                "campaign": { "type": "string" }
+            }
+        },
         "twitch": {
             "type": "object",
             "properties": {

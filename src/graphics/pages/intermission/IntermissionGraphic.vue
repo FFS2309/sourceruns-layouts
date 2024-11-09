@@ -1,13 +1,12 @@
 <template>
     <div
-        class="intermission-layout"
+        class="intermission-layout bg-panel bg-panel-hl1 blur-bg"
         :class="{ 'with-visualizer-space': addVisualizerSpace }"
     >
-        <div class="bg-panel bg-panel-jump blur-bg">
             <div class="layout horizontal logos u-non-blur">
                 <img src="../../assets/img/small-logo.png">
             </div>
-            <div class="bg-inset m-t-16 layout vertical center-horizontal u-non-blur">
+            <div class="bg-inset m-t-16 layout vertical center-horizontal u-non-blur donations">
                 <div class="header layout horizontal">
                   <span style="width: 100%; font-size: 16px">Donations</span>
                   <span style="width: 5%; font-size: 16px" class="button">X</span>
@@ -18,7 +17,7 @@
                   <span style="font-size: 24px; font-weight: bold;">St. Jude Children's Research Hospital</span>
                 </div>
             </div>
-            <div class="bg-inset m-t-16 u-non-blur" style="overflow: hidden;">
+            <div class="bg-inset m-t-16 u-non-blur omnibar" style="overflow: hidden;">
               <div class="header layout horizontal">
                 <span style="width: 100%; font-size: 16px">Omnibar</span>
                 <span style="width: 5%; font-size: 16px" class="button">X</span>
@@ -32,7 +31,7 @@
                 />
               </div>
             </div>
-            <div class="bg-inset m-t-16 layout vertical u-non-blur">
+            <div class="bg-inset m-t-16 layout vertical u-non-blur radio">
               <div class="header layout horizontal">
                 <span style="width: 100%; font-size: 16px">Radio</span>
                 <span style="width: 5%; font-size: 16px" class="button">X</span>
@@ -94,17 +93,14 @@
                     style="height: 120px"
                 />
             </div>
-        </div>
-        <large-separator direction="vertical" />
-        <div class="bg-panel bg-panel-portal blur-bg">
-          <div class="bg-inset u-non-blur">
+        <!--<large-separator direction="vertical" />-->
+          <div class="bg-inset u-non-blur schedule">
             <div class="header layout horizontal">
               <span style="width: 100%; font-size: 16px">Schedule</span>
               <span style="width: 5%; font-size: 16px" class="button">X</span>
             </div>
             <intermission-schedule/>
           </div>
-        </div>
     </div>
 </template>
 
@@ -181,14 +177,33 @@ const hostSpeaking = computed(() => {
 }
 
 .intermission-layout {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 14px minmax(0, 1fr);
-    height: 100%;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  grid-column-gap: 10px;
+  grid-row-gap: 0;
+  height: 100%;
+  background-size: cover;
 
     > .bg-panel {
         padding: 40px 50px;
         display: flex;
         flex-direction: column;
+    }
+    > .schedule {
+      grid-area: 1 / 3 / 6 / 5;
+    }
+    > .logos {
+      grid-area: 1 / 1 / 2 / 3;
+    }
+    > .donations {
+      grid-area: 5 / 1 / 6 / 3;
+    }
+    > .omnibar {
+      grid-area: 2 / 5 / 3 / 7;
+    }
+    > .radio {
+      grid-area: 4 / 5 / 5 / 7;
     }
 
     &.with-visualizer-space {

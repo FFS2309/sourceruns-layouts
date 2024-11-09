@@ -74,7 +74,7 @@ async function apply() {
         if (selectedSourceName.value == null || streamKey.value == null) return;
         await sendMessage('obs:setVLCPlaylistItem', {
           inputName: selectedSourceName.value,
-          inputUrl: `rtmp://eu.speedrun.zip/live/${streamKey.value}`
+          inputUrl: `rtmp://eu-rtmp.speedrun.zip/live/${streamKey.value}`
         })
     } finally {
         isOpen.value = false;
