@@ -4,7 +4,7 @@
         <span>Next Up</span>
       </div>
       <div class="table-header layout horizontal center-vertical">
-        <span>Game</span><span>Runner</span><span>Category</span><span style="width: 30%;">Estimate</span><span style="width: 30%;">Players</span>
+        <span>Game</span><span>Runner</span><span>Category</span><span style="width: 20%;">Est.</span><span style="width: 15%; padding: 2px 6px">Players</span>
       </div>
       <div class="intermission-schedule">
         <template
