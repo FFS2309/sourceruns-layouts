@@ -40,7 +40,7 @@ body {
 .omnibar-wrapper {
     width: 100%;
     height: 100%;
-    background: colors.$layout-panel-background;
+    background: colors.$hl-panel-background;
     display: flex;
     align-items: center;
     justify-content: space-between;

@@ -3,7 +3,6 @@ import type NodeCG from '@nodecg/types';
 import type { AllBids, AllPrizes, Configschema, Milestones } from 'types/schemas';
 import { generateUserAgent } from '../helpers/GenerateUserAgent';
 import axios, { isAxiosError } from 'axios';
-import cookie from "cookie";
 
 interface TiltifyCampaignResponse {
     data: {
@@ -40,6 +39,32 @@ interface TiltifyMilestone {
 
 interface TiltifyMilestonesResponse {
     data: TiltifyMilestone[];
+}
+
+interface TiltifyPollOption {
+    amount_raised: {
+        currency: string
+        value: string
+    }
+    id: string
+    legacy_id: number
+    name: string
+}
+
+interface TiltifyPoll {
+    active: boolean
+    amount_raised: {
+        currency: string
+        value: string
+    }
+    id: string
+    name: string
+    legacy_id: number
+    options: TiltifyPollOption[]
+}
+
+interface TiltifyPollResponse {
+    data: TiltifyPoll[];
 }
 
 interface TiltifyTokenResponse {
@@ -115,6 +140,23 @@ export class TiltifyClient {
         goals.forEach(goal => {milestones.push(goal)});
         return milestones;
     }
+
+	async getBids(current: boolean): Promise<AllBids>{
+        const pollsResponse = await this.axios.get<TiltifyPollResponse>(`/api/public/campaigns/${this.campaignId}/polls`);
+        const polls = pollsResponse.data.data.map(poll => ({
+            id: poll.legacy_id,
+            name: poll.name,
+            total: parseFloat(poll.amount_raised.value),
+            state: poll.active ? "active" : "inactive",
+            options: poll.options.map(option => ({
+                id: option.legacy_id,
+                name: option.name,
+                total: parseFloat(option.amount_raised.value)
+            }))
+
+        }));
+        return polls;
+	}
 
     async getToken(): Promise<TiltifyTokenResponse> {
         this.token = undefined;

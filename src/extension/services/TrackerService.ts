@@ -100,7 +100,9 @@ export class TrackerService {
         if (this.tiltifyClient == null) return;
 
         const results = await Promise.allSettled([
-            this.tiltifyClient.getMilestones().then(milestones => { this.milestones.value = milestones; })
+            this.tiltifyClient.getMilestones().then(milestones => { this.milestones.value = milestones; }),
+			this.tiltifyClient.getBids(false).then(currentBids => { this.currentBids.value = currentBids; }),
+			this.tiltifyClient.getBids(true).then(allBids => { this.allBids.value = allBids; })
         ]);
 
         setTimeout(this.pollTiltifyData.bind(this), 30 * 1000);
