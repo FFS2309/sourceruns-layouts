@@ -26,7 +26,7 @@
         <large-separator direction="vertical" />
         <div class="layout vertical">
             <div
-                class="game-capture layout-gap-bottom max-height"
+                class="game-capture layout-gap-bottom"
                 data-capture-index="0"
             />
             <div class="timer-wrapper bg-panel bg-timer blur-bg layout horizontal center-vertical center-horizontal">
