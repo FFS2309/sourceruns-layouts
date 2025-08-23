@@ -81,7 +81,11 @@ import MediaBox from 'components/MediaBox.vue';
     width: 100%;
 }
 
-.timer-wrapper > * {
+.timer-wrapper {
+    height: 160px;
+}
+
+.timer-wrapper > *{
     width: 580px;
     height: 110px;
 }
