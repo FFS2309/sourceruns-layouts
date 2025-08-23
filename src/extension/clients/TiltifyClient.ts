@@ -67,6 +67,25 @@ interface TiltifyPollResponse {
     data: TiltifyPoll[];
 }
 
+interface TiltifyTarget {
+    "active": boolean,
+    "id": string,
+    "name": string,
+    amount: {
+        "value": string,
+        "currency": string
+    },
+    amount_raised: {
+        value: string
+        "currency": string
+    }
+    "legacy_id": number
+}
+
+interface TiltifyTargetResponse {
+    data: TiltifyTarget[];
+}
+
 interface TiltifyTokenResponse {
     access_token: string
     created_at: string
@@ -143,19 +162,38 @@ export class TiltifyClient {
 
 	async getBids(current: boolean): Promise<AllBids>{
         const pollsResponse = await this.axios.get<TiltifyPollResponse>(`/api/public/campaigns/${this.campaignId}/polls`);
-        const polls = pollsResponse.data.data.map(poll => ({
-            id: poll.legacy_id,
-            name: poll.name,
-            total: parseFloat(poll.amount_raised.value),
-            state: poll.active ? "active" : "inactive",
-            options: poll.options.map(option => ({
-                id: option.legacy_id,
-                name: option.name,
-                total: parseFloat(option.amount_raised.value)
-            }))
+        const targetsResponse = await this.axios.get<TiltifyTargetResponse>(`/api/public/campaigns/${this.campaignId}/targets`);
+        const bids: AllBids = [];
+        pollsResponse.data.data.forEach((poll) => {
+                const formattedBid: AllBids[number] = {
+                    id: poll.legacy_id,
+                    name: poll.name,
+                    total: parseFloat(poll.amount_raised.value),
+                    state: poll.active ? "OPENED" : "CLOSED"
+                }
+                formattedBid.options = [];
+                poll.options.forEach((option) => {
+                    formattedBid.options?.push({
+                        id: option.legacy_id,
+                        name: option.name,
+                        total: parseFloat(option.amount_raised.value)
+                    })
+                });
+                bids.push(formattedBid);
+        });
 
-        }));
-        return polls;
+        targetsResponse.data.data.forEach((bid) => {
+            const formattedBid: AllBids[number] = {
+                id: bid.legacy_id,
+                name: bid.name,
+                goal: parseFloat(bid.amount.value),
+                total: parseFloat(bid.amount_raised.value),
+                state: bid.active ? "OPENED" : "CLOSED"
+            }
+            bids.push(formattedBid);
+        });
+
+        return bids;
 	}
 
     async getToken(): Promise<TiltifyTokenResponse> {

@@ -4,7 +4,7 @@
             <fitted-content class="incentive-name m-r-8">
                 <span v-if="!$helpers.isBlank(props.incentive.speedrunName)" class="speedrun-name">{{ props.incentive.speedrunName }} - </span>{{ props.incentive.name }}
             </fitted-content>
-            <div>{{ formatNumber(props.incentive.total) }}/<span class="incentive-total">{{ props.incentive.goal == null ? '-' : formatNumber(props.incentive.goal) }}kr</span></div>
+            <div>${{ formatNumber(props.incentive.total) }}/<span class="incentive-total">${{ props.incentive.goal == null ? '-' : formatNumber(props.incentive.goal) }}</span></div>
         </div>
         <vfd-pixel-text
             :font-size="24"

@@ -30,7 +30,7 @@
             >
                 <div class="option-numbers">
                     <div class="percentage">{{ props.bidWar.total === 0 ? 0 : Math.round((option.total / props.bidWar.total) * 100) }}%</div>
-                    <div class="total">{{ formatNumber(option.total) }}kr</div>
+                    <div class="total">${{ formatNumber(option.total) }}</div>
                 </div>
                 <fitted-content align="center" class="option-name">{{ option.name }}</fitted-content>
             </div>
@@ -48,7 +48,7 @@
                 <fitted-content class="option-name">
                     {{ option.name }}
                 </fitted-content>
-                <div class="option-total">{{ formatNumber(option.total) }}kr</div>
+                <div class="option-total">${{ formatNumber(option.total) }}</div>
             </div>
             <div
                 v-if="(props.bidWar.options?.length ?? 0) > maxOptions"
