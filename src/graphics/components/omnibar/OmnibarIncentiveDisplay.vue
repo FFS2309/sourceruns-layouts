@@ -6,11 +6,13 @@
             </fitted-content>
             <div>${{ formatNumber(props.incentive.total) }}/<span class="incentive-total">${{ props.incentive.goal == null ? '-' : formatNumber(props.incentive.goal) }}</span></div>
         </div>
-        <vfd-pixel-text
+        <progress class="milestone-progress" :max="props.incentive.goal ?? 0" :value="props.incentive.total"></progress>
+
+        <!--<vfd-pixel-text
             :font-size="24"
             text-align="left"
             :progress-bar="{ current: props.incentive.total, start: 0, end: props.incentive.goal ?? 0, showStartEnd: false }"
-        />
+        />-->
     </div>
 </template>
 
@@ -46,5 +48,27 @@ const props = defineProps<{
 
 .incentive-total, .incentive-name {
     font-weight: 700;
+}
+
+
+
+.milestone-progress {
+  width: 100%;
+  height: 25px;
+}
+
+
+progress
+{
+  appearance: none;
+}
+
+progress::-webkit-progress-bar {
+  background-color: colors.$hl-green-light;
+  border: 2px solid colors.$hl-grey;
+}
+
+progress::-webkit-progress-value {
+  background-color: colors.$hl-hud-text-color;
 }
 </style>
