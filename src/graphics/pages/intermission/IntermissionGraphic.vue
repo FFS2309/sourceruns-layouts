@@ -14,7 +14,10 @@
                 <div class="m-b-8 layout horizontal center-vertical">
                     <donation-total class="donation-total" />
                     <div class="pointer-icon">»</div>
-                  <span style="font-size: 24px; font-weight: bold;">St. Jude Children's Research Hospital</span>
+                  <img
+                      class="charity-logo"
+                      src="../../assets/img/charity-logo-wide.png"
+                  >
                 </div>
             </div>
             <div class="bg-inset m-t-16 u-non-blur omnibar" style="overflow: hidden;">
@@ -168,10 +171,10 @@ const hostSpeaking = computed(() => {
     padding: 2px 12px;
     width: 100%;
     &.button {
-      border-right: 2px solid colors.$hl-shadow;
-      border-bottom: 2px solid colors.$hl-shadow;
-      border-top: 2px solid colors.$hl-highlight;
-      border-left: 2px solid colors.$hl-highlight
+      //border-right: 2px solid colors.$hl-shadow;
+      //border-bottom: 2px solid colors.$hl-shadow;
+      //border-top: 2px solid colors.$hl-highlight;
+      //border-left: 2px solid colors.$hl-highlight
     }
   }
 }
@@ -197,7 +200,7 @@ const hostSpeaking = computed(() => {
       grid-area: 1 / 1 / 2 / 3;
     }
     > .donations {
-      grid-area: 5 / 1 / 6 / 3;
+      grid-area: 3 / 1 / 4 / 3;
     }
     > .omnibar {
       grid-area: 2 / 5 / 3 / 7;
@@ -252,7 +255,7 @@ const hostSpeaking = computed(() => {
 }
 
 .charity-logo {
-    height: 129px;
+    width: 200px;
     margin: -8px 0;
 }
 

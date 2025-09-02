@@ -3,7 +3,6 @@ import type NodeCG from '@nodecg/types';
 import type { AllBids, AllPrizes, Configschema, Milestones } from 'types/schemas';
 import { generateUserAgent } from '../helpers/GenerateUserAgent';
 import axios, { isAxiosError } from 'axios';
-import cookie from "cookie";
 
 interface TiltifyCampaignResponse {
     data: {
@@ -40,6 +39,51 @@ interface TiltifyMilestone {
 
 interface TiltifyMilestonesResponse {
     data: TiltifyMilestone[];
+}
+
+interface TiltifyPollOption {
+    amount_raised: {
+        currency: string
+        value: string
+    }
+    id: string
+    legacy_id: number
+    name: string
+}
+
+interface TiltifyPoll {
+    active: boolean
+    amount_raised: {
+        currency: string
+        value: string
+    }
+    id: string
+    name: string
+    legacy_id: number
+    options: TiltifyPollOption[]
+}
+
+interface TiltifyPollResponse {
+    data: TiltifyPoll[];
+}
+
+interface TiltifyTarget {
+    "active": boolean,
+    "id": string,
+    "name": string,
+    amount: {
+        "value": string,
+        "currency": string
+    },
+    amount_raised: {
+        value: string
+        "currency": string
+    }
+    "legacy_id": number
+}
+
+interface TiltifyTargetResponse {
+    data: TiltifyTarget[];
 }
 
 interface TiltifyTokenResponse {
@@ -115,6 +159,42 @@ export class TiltifyClient {
         goals.forEach(goal => {milestones.push(goal)});
         return milestones;
     }
+
+	async getBids(current: boolean): Promise<AllBids>{
+        const pollsResponse = await this.axios.get<TiltifyPollResponse>(`/api/public/campaigns/${this.campaignId}/polls`);
+        const targetsResponse = await this.axios.get<TiltifyTargetResponse>(`/api/public/campaigns/${this.campaignId}/targets`);
+        const bids: AllBids = [];
+        pollsResponse.data.data.forEach((poll) => {
+                const formattedBid: AllBids[number] = {
+                    id: poll.legacy_id,
+                    name: poll.name,
+                    total: parseFloat(poll.amount_raised.value),
+                    state: poll.active ? "OPENED" : "CLOSED"
+                }
+                formattedBid.options = [];
+                poll.options.forEach((option) => {
+                    formattedBid.options?.push({
+                        id: option.legacy_id,
+                        name: option.name,
+                        total: parseFloat(option.amount_raised.value)
+                    })
+                });
+                bids.push(formattedBid);
+        });
+
+        targetsResponse.data.data.forEach((bid) => {
+            const formattedBid: AllBids[number] = {
+                id: bid.legacy_id,
+                name: bid.name,
+                goal: parseFloat(bid.amount.value),
+                total: parseFloat(bid.amount_raised.value),
+                state: bid.active ? "OPENED" : "CLOSED"
+            }
+            bids.push(formattedBid);
+        });
+
+        return bids;
+	}
 
     async getToken(): Promise<TiltifyTokenResponse> {
         this.token = undefined;

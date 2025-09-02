@@ -35,7 +35,7 @@
       <div class="layout horizontal center-vertical">
         <div class="full-schedule-label">Full Schedule</div>
         <div class="full-schedule-pointer-icon m-x-8">»</div>
-        <div class="full-schedule-link">schedule.sourceruns.org</div>
+        <div class="full-schedule-link">oengus.fun/sr2025/schedule</div>
       </div>
     </div>
 </template>
